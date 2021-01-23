@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-<<<<<<< HEAD
 import Home from './HomeComponent';
 import Menu from './menuComponents';
 import DishDetail from './DishdetailComponent';
@@ -22,17 +21,11 @@ const mapStateToProps = state => {
     leaders: state.leaders
   }
 }
-=======
-import Menu from './menuComponents';
-import DishDetail from './DishdetailComponent';
-import { DISHES } from '../shared/dishes';
->>>>>>> 0986343 (removed eslintcache)
 
 class Main extends Component {
 
   constructor(props) {
     super(props);
-<<<<<<< HEAD
 
   }
 
@@ -72,24 +65,6 @@ class Main extends Component {
         <Redirect to="/home" />
 
         </Switch>
-=======
-    this.state = {
-        dishes: DISHES,
-        selectedDish: null
-    };
-  }
-
-  onDishSelect(dishId) {
-    this.setState({ selectedDish: dishId});
-  }
-
-  render() {
-    return (
-      <div>
-        <Header />
-        <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)} />
-        <DishDetail dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
->>>>>>> 0986343 (removed eslintcache)
         <Footer />
       </div>
     );
