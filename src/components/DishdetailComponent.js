@@ -12,7 +12,7 @@ const required = (val) => {console.log(val && val.length,{val}); return val && v
 const maxLength = (len) => (val) => {/*console.log({len,val});*/ return !(val) || (val.length <= len);}
 const minLength = (len) => (val) => val && (val.length >= len);
 
-    function RenderDishComments(DishComment){
+    function RenderDishComments(props){
         const [isModalOpen, handleModal] = useState(false)
         
         // useEffect(() => {
@@ -25,8 +25,10 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
         
         function handleSubmit(values) {
-            console.log('Comment submitted is:' + JSON.stringify(values));
-            alert('Comment submitted is: ' + JSON.stringify(values));
+            // console.log('Comment submitted is:' + JSON.stringify(values));
+            // alert('Comment submitted is: ' + JSON.stringify(values));
+            props.addComment(props.dishId, values.rating, values.author, values.comment)
+
         }
 
         const CommentForm=()=>{
@@ -60,10 +62,10 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     
                 </Col>
             </Row>
-            <Label htmlFor="name">Your Name</Label>
+            <Label htmlFor="author">Your Name</Label>
             <Row className="form-group">
                 <Col md={12}>
-                   <Control.text model=".name" id="name" name="name"
+                   <Control.text model=".author" id="author" name="author"
                         placeholder="Your Name"
                         className="form-control"
                         validators={{
@@ -72,7 +74,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                          />
                     <Errors
                         className="text-danger"
-                        model=".name"
+                        model=".author"
                         show="touched"
                         messages={{
                             required: 'Required ',
@@ -119,10 +121,10 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
 
 
-        if(DishComment!=null){
-         console.log({DishComment})
-         let idx = DishComment.length
-        let commentsAll = DishComment.map(
+        if(props.DishComment!=null){
+         console.log(props.DishComment)
+         let idx = props.DishComment.length
+        let commentsAll = props.DishComment.map(
             (cmts,index)=>(
                     <div>
                     <CardBody>
@@ -142,7 +144,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     <h4>Comments</h4>
                 </div>
                  {commentsAll}
-                 {CommentForm()?CommentForm():"CommentForm()"}
+                 <CommentForm dishId={props.dishId} addComment={props.addComment}> </CommentForm>
                  
              </div>)
             }
@@ -196,7 +198,9 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     </div>
 
                     <div className="col-12 col-md-5 m-1">
-                    {RenderDishComments(props.comments)}
+                    <RenderDishComments DishComment={props.comments} addComment={props.addComment}
+                    dishId={props.dish.id}>
+                    </RenderDishComments>
                     </div>
 
                     {}
