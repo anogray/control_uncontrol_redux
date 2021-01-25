@@ -185,3 +185,42 @@ export const addLeaders = (leaders)=>({
     type: ActionTypes.ADD_LEADERS,
     payload: leaders})
 
+
+export const postFeedback = (feedback)=> async(dispatch)=>{
+    
+    console.log("posting feedback before db")
+
+    try{
+
+        const header = {"Content-Type": "application/json"}
+        const getfeedback = await axios.get(baseUrl+"feedback")
+        
+        const id =  getfeedback.data.length?getfeedback.data.length+1:1;
+   
+        feedback = {...feedback,id:id}
+
+        const res = await axios.post(baseUrl+"feedback", feedback, header)
+        console.log("posting feedback in db")
+
+    }
+    catch(error){
+         console.log("post error",error)
+        let err=error;
+        if(error.response==undefined)
+        {err="Network Error"}
+        else{
+            err=error.response.statusText+":"+error.response.status
+        }
+        dispatch(feedbackFailed(err))
+    }
+}
+
+// export const addFeedback = (feedback)=>{
+//     return {type:ActionTypes.ADD_FEEDBACK,
+//         payload:feedback}
+// }
+
+export const feedbackFailed = (errMess)=>{
+    return {type:ActionTypes.FEEDBACK_FAILED,
+        payload:errMess}
+}

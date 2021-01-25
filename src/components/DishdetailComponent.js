@@ -5,6 +5,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
 // const [isModalOpen, handleModal] = useState(false)
@@ -129,13 +130,15 @@ const minLength = (len) => (val) => val && (val.length >= len);
          let idx = props.DishComment.length
         let commentsAll = props.DishComment.map(
             (cmts,index)=>(
-                    <div>
+                <Fade in>
+                    <div key={index}>
                     <CardBody>
                     <CardText>{cmts.comment}</CardText>
                     <CardText>--{cmts.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmts.date)))}</CardText>
                     {index==idx-1?<Button outline onClick={handleComment} ><span className="fa fa-pencil fa-lg"></span> Submit Comment</Button>:null}
                     </CardBody>
                     </div> 
+                    </Fade>
                 )
         )
 
@@ -146,7 +149,9 @@ const minLength = (len) => (val) => val && (val.length >= len);
                 <div>
                     <h4>Comments</h4>
                 </div>
-                 {commentsAll}
+                <Stagger in>
+                {commentsAll}
+                </Stagger>
                  <CommentForm dishId={props.dishId}> </CommentForm>
                  
              </div>)
@@ -160,7 +165,11 @@ const minLength = (len) => (val) => val && (val.length >= len);
         if (dish != null)
             return (
             <div className="car">
-                <div className="">
+                 <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                     <Card>
                     <CardImg top src={baseUrl+dish.image} alt={dish.name} />
                     <CardBody>
@@ -168,7 +177,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                       <CardText>{dish.description}</CardText>
                     </CardBody>
                         </Card>
-                        </div>
+                     </FadeTransform>   
 
                    </div>            
             );

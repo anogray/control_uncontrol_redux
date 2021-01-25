@@ -35,10 +35,17 @@ class Contact extends Component {
         });
     }
 
-    handleSubmit(values) {
+    async handleSubmit(values) {
+        console.log("values of contact",values)
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
+        console.log("posting feedback before")
+        await this.props.POSTFEEDBACK(values);
+        console.log("posting feedback after")
+
         this.props.resetFeedbackForm();
+        console.log("posting feedback last")
+
         // event.preventDefault();
     }
 
@@ -83,6 +90,7 @@ class Contact extends Component {
     render() {
         // const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
 
+        
         return (
             <div className="container">
                 <div className="row">
