@@ -29,7 +29,8 @@ const minLength = (len) => (val) => val && (val.length >= len);
         function handleSubmit(values) {
             // console.log('Comment submitted is:' + JSON.stringify(values));
             // alert('Comment submitted is: ' + JSON.stringify(values));
-            props.addComment(props.dishId, values.rating, values.author, values.comment)
+            console.log("values",values)
+            props.postComment(props.dishId, values.rating, values.author, values.comment)
 
         }
 
@@ -146,7 +147,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     <h4>Comments</h4>
                 </div>
                  {commentsAll}
-                 <CommentForm dishId={props.dishId} addComment={props.addComment}> </CommentForm>
+                 <CommentForm dishId={props.dishId}> </CommentForm>
                  
              </div>)
             }
@@ -217,7 +218,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                     </div>
 
                     <div className="col-12 col-md-5 m-1">
-                    <RenderDishComments DishComment={props.comments} addComment={props.addComment}
+                    <RenderDishComments DishComment={props.comments} postComment={props.postComment}
                     dishId={props.dish.id}>
                     </RenderDishComments>
                     </div>

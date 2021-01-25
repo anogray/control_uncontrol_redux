@@ -5,15 +5,43 @@ import { baseUrl } from '../shared/baseUrl';
 const axios = require("axios");
 
 
-export const addComment = (dishId, rating, author, comment) => ({
+export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
-    payload: {
-        dishId: dishId,
-        rating: rating,
-        author: author,
-        comment: comment
-    }
+    payload:comment
 });
+
+export const postComment = (dishId, rating, author, comment) => async(dispatch) =>{
+
+    //get this from propped from dishDetails got prop which was passed from mainComponent        
+    const newComment = {
+                    dishId: dishId,
+                    rating: rating,
+                    author: author,
+                    comment: comment
+                };
+                newComment.date = new Date().toISOString();
+                
+                console.log("newComment",newComment)
+
+                const header = {"Content-Type": "application/json"}
+
+                try{
+                    console.log("tried")
+                    const res = await axios.post(baseUrl+"comments", newComment, header)
+                   console.log("res.status",res.status);
+            console.log("res.data",res.data);
+                    dispatch(addComment(res.data))
+                }
+                catch(error){
+                    console.log("comment posted failed".error.message)
+                    alert(error.message);
+                }
+
+            // const res = await axios.post(baseUrl+"comments", newComment. header)
+            // console.log("res.status",res.status);
+            // console.log("res.data",res.data);
+
+}
 
 export const fetchDishes = () => async(dispatch) => {
 
