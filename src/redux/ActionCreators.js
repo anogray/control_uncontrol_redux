@@ -26,10 +26,10 @@ export const postComment = (dishId, rating, author, comment) => async(dispatch) 
                 const header = {"Content-Type": "application/json"}
 
                 try{
-                    console.log("tried")
+                    //console.log("tried")
                     const res = await axios.post(baseUrl+"comments", newComment, header)
-                   console.log("res.status",res.status);
-            console.log("res.data",res.data);
+                  // console.log("res.status",res.status);
+            //console.log("res.data",res.data);
                     dispatch(addComment(res.data))
                 }
                 catch(error){
