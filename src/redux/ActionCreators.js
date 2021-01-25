@@ -152,3 +152,36 @@ export const addPromos = (promos) => ({
     type: ActionTypes.ADD_PROMOS,
     payload: promos
 });
+
+export const fetchLeaders = ()=> async(dispatch) =>{
+
+    dispatch(leadersLoading());
+
+    try{
+        const res = await axios.get(baseUrl+"leaders")
+        dispatch(addLeaders(res.data))
+    }
+    catch(error){
+        let err=error;
+        if(error.response==undefined)
+        {err="Network Error"}
+        else{
+            err=error.response.statusText+":"+error.response.status
+        }
+        dispatch(leadersFailed(err))
+    }
+}
+
+export const leadersLoading = ()=>(
+    {type: ActionTypes.LEADERS_LOADING}
+    )
+
+export const leadersFailed = (errMess)=>(
+        {type: ActionTypes.LEADERS_FAILED,
+        payload: errMess}
+        )
+
+export const addLeaders = (leaders)=>({
+    type: ActionTypes.ADD_LEADERS,
+    payload: leaders})
+
