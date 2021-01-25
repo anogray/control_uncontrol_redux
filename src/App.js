@@ -10,7 +10,7 @@ const store = ConfigureStore();
 
 class App extends Component {
   render(){
-    console.log("store",store)
+    // console.log("store",store)
     return (
       <Provider store={store}>
       <BrowserRouter>
